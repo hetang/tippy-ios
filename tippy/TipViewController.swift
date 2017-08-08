@@ -15,14 +15,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var billTextField: UITextField!
     @IBOutlet weak var selectedTip: UISegmentedControl!
     
+    let defaults = UserDefaults.standard
     let formatter = NumberFormatter()
     let tipPercentages = [0.18,0.2,0.25]
     var deafultTip: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaults = UserDefaults.standard
         let intValue = defaults.integer(forKey: "default_tip_index")
+        let billValue = defaults.double(forKey: "last_bill_value")
+        let last10Min = Date().addingTimeInterval((-10 * 60))
+        let billValueDate = defaults.object(forKey: "last_bill_time") as? Date ?? last10Min
+    
         selectedTip.selectedSegmentIndex = intValue
         deafultTip = intValue
         
@@ -31,6 +35,13 @@ class ViewController: UIViewController {
     
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
+        
+        if (billValueDate > last10Min) {
+            billTextField.text = String(billValue)
+            calcluateTipFromBill(bill: billValue)
+        }
+        
+        billTextField.becomeFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +56,13 @@ class ViewController: UIViewController {
             calculateTip(animated)
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let bill = Double(billTextField.text!) ?? 0
+        defaults.set(bill, forKey: "last_bill_value")
+        defaults.set(Date(), forKey:"last_bill_time")
+        defaults.synchronize()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -57,6 +75,10 @@ class ViewController: UIViewController {
     
     @IBAction func calculateTip(_ sender: Any) {
         let bill = Double(billTextField.text!) ?? 0
+        calcluateTipFromBill(bill: bill)
+    }
+    
+    func calcluateTipFromBill(bill: Double) {
         let tip = bill * tipPercentages[selectedTip.selectedSegmentIndex]
         let total = bill + tip
         let tipFormatted = formatter.string(for: tip)
