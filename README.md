@@ -36,7 +36,7 @@ As part of your pre-work submission, please reflect on the app and answer the fo
 
 **Question 1**: "What are your reactions to the iOS app development platform so far? How would you describe outlets and actions to another developer? Bonus: any idea how they are being implemented under the hood? (It might give you some ideas if you right-click on the Storyboard and click Open As->Source Code")
 
-**Answer:** Story board is fun to do. I am proficient android developer and seeing ease in UI creation feels very good. outlets and actions in story board defined under xml tags. It has selector, event Type and desitination id.
+**Answer:** Story board is fun to do. I am proficient android developer and seeing ease in UI creation feels very good. outlets and actions in story board defined under xml tags. It has selector, event Type and desitination id as attributes of tags.
 
 Question 2: "Swift uses [Automatic Reference Counting](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID49) (ARC), which is not a garbage collector, to manage memory. Can you explain how you can get a strong reference cycle for closures? (There's a section explaining this concept in the link, how would you summarize as simply as possible?)"
 
