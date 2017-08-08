@@ -1,5 +1,4 @@
-# 
-Codepath iOS Prework
+# Codepath iOS Prework
 
 # Pre-work - *tippy-ios*
 
